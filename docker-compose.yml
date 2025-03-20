@@ -1,0 +1,22 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-container
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD='AV4{DFe1zA+8'
+    ports:
+      - "1433:1433"
+    networks:
+      - sql-network
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    restart: always
+
+networks:
+  sql-network:
+    driver: bridge
+
+volumes:
+  sqlserver-data:
+    driver: local
