@@ -10,6 +10,7 @@ import { AuthUserRequest } from '../../models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { catchError, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class LoginComponent {
       }))
     .subscribe((result) => {
       this.authService.saveToken(result.body.token, result.body.refreshToken);
-      this.router.navigate(['tasks']);
+      this.router.navigate(['products']);
     })
   }
 

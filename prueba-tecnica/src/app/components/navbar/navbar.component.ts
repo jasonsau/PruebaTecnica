@@ -6,7 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,6 +23,8 @@ export class NavbarComponent {
 	isBrowser: boolean;
 	platform = inject(PLATFORM_ID);
 	title = 'SimpleProject';
+	authService = inject(AuthService);
+	router = inject(Router);
 
 
 	constructor() {
@@ -36,4 +39,10 @@ export class NavbarComponent {
 			this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
 		}
 	}
+
+	handleLogout() {
+		this.authService.logout();
+		this.router.navigate(['']);
+	}
+
 }
