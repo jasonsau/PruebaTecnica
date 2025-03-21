@@ -1,3 +1,9 @@
-<button mat-fab aria-label="Agregar Producto" (click)="openDialog()">
-    <mat-icon>add</mat-icon>
-</button>
+@if(producto() === undefined) {
+    <button mat-fab aria-label="Agregar Producto" (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+    </button>
+} @else {
+    <button mat-mini-fab aria-label="Editar Producto" (click)="openDialog()">
+        <mat-icon>edit</mat-icon>
+    </button>
+}

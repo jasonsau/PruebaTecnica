@@ -1,5 +1,5 @@
 <h1 style = "text-align: center;">Productos</h1>
 <div class="container">
     <app-add-producto (updateList)="getProducts()" ></app-add-producto>
-    <app-list [dataSource]="dataSource" ></app-list>
+    <app-list [dataSource]="dataSource" (updateList)="getProducts()"></app-list>
 </div>

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, output, Output, signal } from '@angular/core';
+import { Component, inject, input, OnDestroy, OnInit, output, Output, signal } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogModule, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProductService, TipoProductoService } from '../../../services';
-import { MessageError, ProductoRequest, TipoProducto } from '../../../models';
+import { MessageError, Producto, ProductoRequest, TipoProducto } from '../../../models';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, throwError } from 'rxjs';
@@ -21,11 +21,12 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './add-producto.component.css'
 })
 export class AddProductoComponent {
+  producto = input<Producto | null>()
   readonly dialog = inject(MatDialog);
 
   updateList = output<void>();
   openDialog() {
-    this.dialog.open(AddProductoComponentDialog, {data: {updateList: this.updateList}});
+    this.dialog.open(AddProductoComponentDialog, {data: {updateList: this.updateList, producto: this.producto()}});
   }
 
 }
@@ -48,7 +49,7 @@ export class AddProductoComponent {
     MatInputModule
   ],
 })
-export class AddProductoComponentDialog implements OnInit{
+export class AddProductoComponentDialog implements OnInit, OnDestroy{
 
   dataModal = inject(MAT_DIALOG_DATA);
 
@@ -57,6 +58,7 @@ export class AddProductoComponentDialog implements OnInit{
   productoService = inject(ProductService);
   tipoProductos: TipoProducto[] = [];
   loading = signal(false);
+  private destroy = false;
   private _snackBar = inject(MatSnackBar);
 
   productoGroupForm = new FormGroup({
@@ -78,12 +80,20 @@ export class AddProductoComponentDialog implements OnInit{
   });
 
 
-  constructor() {}
 
   ngOnInit() {
     this.tiposProductoService.getTipoProducto().subscribe((data) => {
       this.tipoProductos = data;
     });
+    if(this.dataModal.producto !== undefined) {
+      this.productoGroupForm.setValue({
+        nombre: this.dataModal.producto.nombre,
+        descripcion: this.dataModal.producto.descripcion,
+        precio: this.dataModal.producto.precio,
+        tipoProducto: this.dataModal.producto.tipoProducto.id.toString(),
+        stock: this.dataModal.producto.stock
+      });
+    }
   }
 
   handleAddProducto() {
@@ -91,13 +101,16 @@ export class AddProductoComponentDialog implements OnInit{
       return;
     }
     const newProducto: ProductoRequest = {
+      id: this.dataModal.producto?.id,
       nombre: this.productoGroupForm.value.nombre || '',
       descripcion: this.productoGroupForm.value.descripcion || '',
       precio: Number.parseInt(this.productoGroupForm.value.precio || '0'),
       idTipoProducto: Number.parseInt(this.productoGroupForm.value.tipoProducto || '0'),
       stock: Number.parseInt(this.productoGroupForm.value.stock || '0') 
     }
-    this.productoService.saveProducto(newProducto)
+    const keymMethod = this.dataModal.producto === undefined ? "saveProducto" : "updateProducto";
+    const message = this.dataModal.producto === undefined ? "Producto creado correctamente" : "Producto actualizado correctamente";
+    this.productoService[keymMethod](newProducto)
     .pipe(catchError((error: HttpErrorResponse) => {
       if(error.status === 400) {
         const messageError = error.error as MessageError;
@@ -108,12 +121,13 @@ export class AddProductoComponentDialog implements OnInit{
       return throwError(() => error);
     }))
     .subscribe((_data) => {
-      this.openSnackBar('Producto creado correctamente', 'Cerrar');
+      this.openSnackBar(message, 'Cerrar');
       this.productoService.getProducts();
       this.productoGroupForm.reset();
       this.loading.set(false);
-      this.dialogRef.close();
       this.dataModal.updateList.emit();
+      this.dialogRef.close();
+
     });
   }
   openSnackBar(message: string, action: string) {
@@ -122,6 +136,10 @@ export class AddProductoComponentDialog implements OnInit{
       horizontalPosition: 'right',
       verticalPosition: 'top',
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy = true;
   }
 
 }

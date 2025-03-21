@@ -21,4 +21,12 @@ export class ProductService {
       }
     });
   }
+
+  updateProducto(productoRequest: ProductoRequest): Observable<Producto> {
+    return this.httpClient.put<Producto>(`${environment.urlApi}/producto/${productoRequest.id}`, productoRequest, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
 }

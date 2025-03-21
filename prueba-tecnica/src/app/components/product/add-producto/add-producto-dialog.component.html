@@ -1,6 +1,11 @@
 <h2 mat-dialog-title>
-    <mat-icon style = "margin-right: 3px;">add_task</mat-icon>
-    <span >Agregar Producto</span>
+    @if(dataModal.producto === undefined) {
+        <mat-icon style = "margin-right: 3px;">add_task</mat-icon>
+        <span >Agregar Producto</span>
+    } @else {
+        <mat-icon style = "margin-right: 3px;">add_task</mat-icon>
+        <span >Editar Producto</span>
+    }
 </h2>
 <mat-dialog-content>
     <mat-form-field style="width: 100%;">
@@ -63,8 +68,15 @@
             <mat-spinner diameter="30"></mat-spinner>
         </button>
     }@else {
+        @if(dataModal.producto === undefined) {
             <button mat-flat-button  (click)="handleAddProducto()" [disabled]="!productoGroupForm.valid">
                 <mat-icon>add</mat-icon>Guardar
             </button>
+        } @else {
+            <button mat-flat-button  (click)="handleAddProducto()" [disabled]="!productoGroupForm.valid">
+                <mat-icon>edit</mat-icon>Editar
+            </button>
+        }
+
     }
 </mat-dialog-actions>

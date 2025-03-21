@@ -19,4 +19,5 @@ export interface ProductoRequest {
     stock: number;
     descripcion: string;
     idTipoProducto: number;
+    id?: number;
 }
