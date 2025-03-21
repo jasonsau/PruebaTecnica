@@ -1,0 +1,17 @@
+spring:
+    application:
+        name: pruebatecnica
+    datasource:
+        url: jdbc:sqlserver://localhost:1434;trustServerCertificate=true;databaseName=pruebatecnica
+        username: tu usuario
+        password: tu password
+
+jwt:
+  private.key: classpath:private.key
+  public.key: classpath:public.key
+  duration: 3600
+app:
+  url: http://localhost:8080
+  cors: http://localhost:4200
+
+
