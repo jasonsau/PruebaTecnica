@@ -12,3 +12,11 @@ export interface Producto {
     usuarioUpdate: Usuario | null;
     tipoProducto: TipoProducto
 }
+
+export interface ProductoRequest {
+    nombre: string;
+    precio: number;
+    stock: number;
+    descripcion: string;
+    idTipoProducto: number;
+}

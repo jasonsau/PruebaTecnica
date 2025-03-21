@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Producto } from '../models';
+import { Producto, ProductoRequest} from '../models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,8 +9,16 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
   httpClient = inject(HttpClient);
-  constructor() { }
+
   getProducts():Observable<Producto[]> {
     return this.httpClient.get<Producto[]>(`${environment.urlApi}/producto`);
+  }
+
+  saveProducto(productoRequest: ProductoRequest): Observable<Producto> {
+    return this.httpClient.post<Producto>(`${environment.urlApi}/producto`, productoRequest, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 }

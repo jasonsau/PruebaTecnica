@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>
+    <mat-icon style = "margin-right: 3px;">add_task</mat-icon>
+    <span >Agregar Producto</span>
+</h2>
+<mat-dialog-content>
+    <mat-form-field style="width: 100%;">
+        <mat-label>Nombre</mat-label>
+        <input matInput [formControl]="productoGroupForm.controls.nombre" maxlength="50">
+        @if(productoGroupForm.controls.nombre.hasError('required')) {
+            <mat-error>El nombre es requerido</mat-error>
+        }
+        @if(productoGroupForm.controls.nombre.hasError('maxlength')) {
+            <mat-error>El nombre debe tener menos de 50 caracteres</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput [formControl]="productoGroupForm.controls.descripcion" maxlength="255"></textarea>
+        @if(productoGroupForm.controls.descripcion.hasError('required')) {
+            <mat-error>La descripción es requerida</mat-error>
+        }
+        @if(productoGroupForm.controls.descripcion.hasError('maxlength')) {
+            <mat-error>La descripción debe tener menos de 255 caracteres</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+        <mat-label>Precio</mat-label>
+        <input matInput [formControl]="productoGroupForm.controls.precio" type="number" min="0" step="0.01">
+        @if(productoGroupForm.controls.precio.hasError('required')) {
+            <mat-error>El precio es requerido</mat-error>
+        }
+        @if(productoGroupForm.controls.precio.hasError('min')) {
+            <mat-error>El precio debe ser mayor o igual a 0</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+        <mat-label>Stock</mat-label>
+        <input matInput [formControl]="productoGroupForm.controls.stock" type="number" min="0">
+        @if(productoGroupForm.controls.stock.hasError('required')) {
+            <mat-error>El stock es requerido</mat-error>
+        }
+        @if(productoGroupForm.controls.stock.hasError('min')) {
+            <mat-error>El stock debe ser mayor o igual a 0</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field style="width: 100%;">
+        <mat-label>Tipo de producto</mat-label>
+        <mat-select matNativeControl [formControl]="productoGroupForm.controls.tipoProducto">
+            <mat-option value="" disabled selected>Seleccione un tipo de producto</mat-option>
+            @for(tipoProducto of tipoProductos; track tipoProducto.id) {
+                <mat-option value="{{tipoProducto.id}}">{{tipoProducto.nombre}}</mat-option>
+            }
+        </mat-select>
+        @if(productoGroupForm.controls.tipoProducto.hasError('required')) {
+            <mat-error>El tipo de producto es requerido</mat-error>
+        }
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    @if(loading()) {
+        <button mat-flat-button [disabled]="true" style="display: flex; align-items: center; justify-content: center;">
+            <mat-spinner diameter="30"></mat-spinner>
+        </button>
+    }@else {
+            <button mat-flat-button  (click)="handleAddProducto()" [disabled]="!productoGroupForm.valid">
+                <mat-icon>add</mat-icon>Guardar
+            </button>
+    }
+</mat-dialog-actions>
