@@ -17,5 +17,8 @@ Hay un request.http el cual podra ver los diferentes endpoints como tal en este 
 Para el frontend Se han creado archivos de environment el cual contiente la ruta 
 Podran ver un login y despues de hacer login los deberia de llevar a una pantalla de contenido el cual tiene un navbar que tambien tiene un logout
 
+Video demostrativo 
+https://youtu.be/Oc1lquT_lbQ
+
 
 
