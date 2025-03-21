@@ -49,7 +49,7 @@ export class AddProductoComponent {
     MatInputModule
   ],
 })
-export class AddProductoComponentDialog implements OnInit, OnDestroy{
+export class AddProductoComponentDialog implements OnInit{
 
   dataModal = inject(MAT_DIALOG_DATA);
 
@@ -138,8 +138,22 @@ export class AddProductoComponentDialog implements OnInit, OnDestroy{
     });
   }
 
-  ngOnDestroy(): void {
-    this.destroy = true;
+  onInput(event: any, pattern: string) {
+    const value = event.target.value;
+    this.productoGroupForm.patchValue({
+      precio: value.replace(/[^0-9.]/g, '')
+    })
+    if(value.indexOf('.') !== value.lastIndexOf('.')) {
+      this.productoGroupForm.patchValue({
+        precio: value.substring(0, value.length - 1)
+      })
+    }
   }
 
+  onInputOnlyNumber(event: any) {
+    const value = event.target.value;
+    this.productoGroupForm.patchValue({
+      stock: value.replace(/[^0-9]/g, '')
+    })
+  }
 }

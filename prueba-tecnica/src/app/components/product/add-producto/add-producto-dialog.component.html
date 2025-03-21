@@ -30,7 +30,7 @@
     </mat-form-field>
     <mat-form-field style="width: 100%;">
         <mat-label>Precio</mat-label>
-        <input matInput [formControl]="productoGroupForm.controls.precio" type="number" min="0" step="0.01" pattern="^\d+(\.\d+)?$" >
+        <input matInput [formControl]="productoGroupForm.controls.precio" type="input" min="0" step="0.01"  (input)="onInput($event, '^\d*\.?\d+$')" >
         @if(productoGroupForm.controls.precio.hasError('required')) {
             <mat-error>El precio es requerido</mat-error>
         }
@@ -40,7 +40,7 @@
     </mat-form-field>
     <mat-form-field style="width: 100%;">
         <mat-label>Stock</mat-label>
-        <input matInput [formControl]="productoGroupForm.controls.stock" type="number" min="0">
+        <input matInput [formControl]="productoGroupForm.controls.stock" type="input" min="0" (input)="onInputOnlyNumber($event)">
         @if(productoGroupForm.controls.stock.hasError('required')) {
             <mat-error>El stock es requerido</mat-error>
         }
@@ -77,6 +77,5 @@
                 <mat-icon>edit</mat-icon>Editar
             </button>
         }
-
     }
 </mat-dialog-actions>
