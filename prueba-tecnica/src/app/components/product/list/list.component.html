@@ -1,24 +1,21 @@
 
-<table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource()" >
 
   <ng-container matColumnDef="nombre">
     <th mat-header-cell *matHeaderCellDef> Nombre </th>
     <td mat-cell *matCellDef="let element"> {{element.nombre}}</td>
   </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="descripcion">
+  <ng-container matColumnDef="descripcion" width="600px">
     <th mat-header-cell *matHeaderCellDef> Descripccion </th>
     <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
   <ng-container matColumnDef="tipoProducto">
     <th mat-header-cell *matHeaderCellDef> Tipo Producto </th>
     <td mat-cell *matCellDef="let element">{{element.tipoProducto.nombre}} </td>
   </ng-container>
 
-  <!-- Symbol Column -->
   <ng-container matColumnDef="stock">
     <th mat-header-cell *matHeaderCellDef> Stock </th>
     <td mat-cell *matCellDef="let element"> {{element.stock}}</td>
@@ -31,7 +28,7 @@
 
   <ng-container matColumnDef="acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
-    <td mat-cell *matCellDef="let element" style="width: 200px;"> 
+    <td mat-cell *matCellDef="let element" > 
       <app-add-producto [producto]="element" (updateList)="getProducts()" style="margin-right:10px;"></app-add-producto>
       <app-delete-product [producto]="element" (updateList)="getProducts()"></app-delete-product>
     </td>
