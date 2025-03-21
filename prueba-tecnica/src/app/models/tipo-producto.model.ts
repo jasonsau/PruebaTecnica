@@ -1,3 +1,4 @@
+import { Usuario } from "./usuario.model";
 
 export interface TipoProducto {
     id: number;
@@ -6,10 +7,4 @@ export interface TipoProducto {
     fechaUpdate: string;
     usuarioCreacion: Usuario;
     usuarioUpdate: Usuario | null;
-}
-
-export interface Usuario {
-    id: number;
-    name: string;
-    email: string;
 }
