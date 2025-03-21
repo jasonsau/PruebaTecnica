@@ -30,7 +30,7 @@
     </mat-form-field>
     <mat-form-field style="width: 100%;">
         <mat-label>Precio</mat-label>
-        <input matInput [formControl]="productoGroupForm.controls.precio" type="number" min="0" step="0.01">
+        <input matInput [formControl]="productoGroupForm.controls.precio" type="number" min="0" step="0.01" pattern="^\d+(\.\d+)?$" >
         @if(productoGroupForm.controls.precio.hasError('required')) {
             <mat-error>El precio es requerido</mat-error>
         }

@@ -3,10 +3,12 @@ import { ProductService } from '../../../services/product.service';
 import { MatTableModule } from '@angular/material/table';
 import { Producto } from '../../../models';
 import { AddProductoComponent } from "../add-producto/add-producto.component";
+import { DeleteProductComponent } from "../delete-product/delete-product.component";
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-list',
-  imports: [MatTableModule, AddProductoComponent],
+  imports: [MatTableModule, AddProductoComponent, DeleteProductComponent, CurrencyPipe],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })

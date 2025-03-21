@@ -1,0 +1,8 @@
+<h2 mat-dialog-title style="padding-left: 20px;">Eliminar Producto</h2>
+<mat-dialog-content> 
+    ¿Estás seguro de que quieres eliminar el producto?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="closeDialog()">No</button>
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="deleteProduct()">Eliminar</button>
+</mat-dialog-actions>

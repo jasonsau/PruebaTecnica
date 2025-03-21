@@ -29,4 +29,8 @@ export class ProductService {
       }
     });
   }
+
+  deleteProducto(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.urlApi}/producto/${id}`);
+  }
 }
