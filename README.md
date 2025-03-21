@@ -20,5 +20,5 @@ Podran ver un login y despues de hacer login los deberia de llevar a una pantall
 Video demostrativo 
 https://youtu.be/Oc1lquT_lbQ
 
-
-
+Video demostrativo version con el crud de productos
+https://youtu.be/ojK0_fXrfAc
